@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      @page { size: A4; margin: 0.55in 0.35in; }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: 'Roboto Mono', 'Courier New', monospace;
+        font-size: 9px;
+        line-height: 1.5;
+        background: #fff;
+        color: #0f172a;
+      }
+      .page { width: 100%; }
+      header { margin-bottom: 14px; }
+      header h1 {
+        margin: 0;
+        font-size: 24px;
+        letter-spacing: 2px;
+        color: #1d4ed8;
+        text-transform: uppercase;
+      }
+      .contact-inline {
+        margin-top: 4px;
+        text-transform: lowercase;
+      }
+      .contact-inline span::after {
+        content: " | ";
+        color: #94a3b8;
+      }
+      .contact-inline span:last-child::after { content: ""; }
+      .contact-inline .label { font-weight: bold; letter-spacing: 0.05em; }
+      .contact-inline .email .label { color: #0f766e; }
+      .contact-inline .phone .label { color: #9333ea; }
+      .contact-inline .linkedin .label { color: #1d4ed8; }
+      .contact-inline .github .label { color: #ea580c; }
+      .contact-inline a { color: inherit; text-decoration: none; }
+      section { margin-bottom: 16px; }
+      section h2 {
+        font-size: 10.5px;
+        letter-spacing: 3px;
+        color: #1d4ed8;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+      }
+      p { margin: 0; text-align: justify; }
+      ul { margin: 6px 0 0; padding-left: 14px; }
+      li { text-align: justify; margin-bottom: 3px; }
+      .experience-entry,
+      .education-entry { margin-bottom: 10px; page-break-inside: avoid; }
+      .experience-entry .role { font-weight: bold; font-size: 10px; }
+      .experience-entry .meta,
+      .education-entry .meta { font-size: 8.5px; color: #475467; margin-bottom: 2px; }
+      .education-entry .institution { font-weight: bold; }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <h1>{{ resume.name }}</h1>
+        <div class="contact-inline">
+          {% for line in resume.contact_lines %}
+            {% set parts = line.split(':', 1) %}
+            {% if parts|length == 2 %}
+              {% set label = parts[0].strip() %}
+              {% set value = parts[1].strip() %}
+              {% set label_class = label.lower() %}
+              {% if label.lower() == 'linkedin' %}
+                {% set value = value.lower().startswith('in:') and value[3:].lstrip() or value %}
+                <span class="linkedin"><span class="label">in:</span> {{ value }}</span>
+              {% elif label.lower() == 'github' %}
+                {% set value = value.lower().startswith('github:') and value[7:].lstrip() or value %}
+                <span class="github"><span class="label">github:</span> {{ value }}</span>
+              {% else %}
+                <span class="{{ label_class }}"><span class="label">{{ label }}:</span> {{ value }}</span>
+              {% endif %}
+            {% else %}
+              <span>{{ line }}</span>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </header>
+
+      <section>
+        <h2>PROFESSIONAL PROFILE</h2>
+        <p>{{ resume.summary }}</p>
+        {% if resume.summary_highlights %}
+        <ul>
+          {% for item in resume.summary_highlights %}
+          <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </section>
+
+      {% if resume.education %}
+      <section>
+        <h2>TRAINING</h2>
+        {% for entry in resume.education %}
+        <div class="education-entry">
+          <div class="institution">{{ entry.institution }} | {{ entry.degree }}</div>
+          <div class="meta">{{ entry.year }}</div>
+        </div>
+        {% endfor %}
+      </section>
+      {% endif %}
+
+      {% if resume.experience %}
+      <section>
+        <h2>PROFESSIONAL EXPERIENCE</h2>
+        {% for entry in resume.experience %}
+        <div class="experience-entry">
+          <div class="role">{{ entry.role }} — {{ entry.company }}</div>
+          <div class="meta">{{ entry.dates }}</div>
+          {% if entry.bullets %}
+          <ul>
+            {% for bullet in entry.bullets %}
+            <li>{{ bullet }}</li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </section>
+      {% endif %}
+
+      {% if resume.publications %}
+      <section>
+        <h2>PUBLICATIONS & OPEN SOURCE</h2>
+        {% for pub in resume.publications %}
+        <p><strong>{{ pub.title }}</strong> — {{ pub.details }}</p>
+        {% endfor %}
+      </section>
+      {% endif %}
+
+      {% if resume.skills %}
+      <section>
+        <h2>TECHNICAL SKILLS</h2>
+        {% for label, items in resume.skills.items() if items %}
+        <p><strong>{{ label }}:</strong> {{ items | join(', ') }}</p>
+        {% endfor %}
+      </section>
+      {% endif %}
+    </div>
+  </body>
+</html>

@@ -1,0 +1,70 @@
+examples:
+  - id: analyze-contract
+    title:
+      zh: 喵法官出警 · 扫描我的租房合同
+      en: MiaoLaw on duty · Scan my rental contract
+    description:
+      zh: 上传租房合同照片/截图/PDF，输出安全指数、坑点解读与反驳话术
+      en: Upload a rental contract photo/screenshot/PDF to get a safety score, risk breakdown, and rebuttal scripts
+    prompt:
+      zh: |-
+        喵律请帮我扫描这份租房合同，揪出霸王条款：
+
+        合同文件：{{合同图片或文件路径}}
+
+        请输出喵法官出警报告：安全指数评分、每个风险项的合同原文、喵喵白话解读、民法典依据，以及可以直接复制发给房东的反驳话术。
+      en: |-
+        Please scan this rental contract and flag any unfair clauses:
+
+        Contract file: {{contract image or file path}}
+
+        Produce the MiaoLaw report: safety score, the original contract text of each risk item, plain-language explanation, Civil Code basis, and a rebuttal script I can copy and send to the landlord.
+
+  - id: demo-experience
+    title:
+      zh: 无合同一键体验 · 喵法官示例合同
+      en: Try it now · MiaoLaw sample contract
+    description:
+      zh: 没有合同也能体验完整诊断流程，用内置示例合同演示
+      en: No contract at hand? Experience the full diagnosis flow with the built-in sample contract
+    prompt:
+      zh: |-
+        我还没有租房合同，想先体验一下 RentGuard AI。请用喵法官示例合同给我做一次完整诊断，输出喵法官出警报告。
+      en: |-
+        I don't have a rental contract yet but want to try RentGuard AI. Please run a full diagnosis on the MiaoLaw sample contract and produce the MiaoLaw report.
+
+  - id: ask-miaolaw
+    title:
+      zh: 问喵律 · 租房法律问题咨询
+      en: Ask MiaoLaw · Rental legal questions
+    description:
+      zh: 押金被扣、房东不维修、提前退租等纠纷，喵律按民法典解答
+      en: Deposit withheld, landlord refusing repairs, early termination — MiaoLaw answers per the Civil Code
+    prompt:
+      zh: |-
+        喵律，我遇到一个问题：{{描述你的租房纠纷，如：房东说空调老化坏了要我出维修费}}
+        请告诉我法律上该怎么说、怎么做。
+      en: |-
+        MiaoLaw, I have a question: {{describe your rental dispute, e.g. landlord wants me to pay for AC repair due to aging}}
+        What does the law say and what should I do?
+
+  - id: rebuttal-script
+    title:
+      zh: 单点反驳话术生成
+      en: Single-clause rebuttal script
+    description:
+      zh: 针对合同里某一条具体条款，生成可复制的谈判话术
+      en: Generate a copyable negotiation script for one specific contract clause
+    prompt:
+      zh: |-
+        帮我针对这条合同条款写一段可以直接发给房东/中介的反驳话术：
+
+        条款原文：{{粘贴条款原文}}
+
+        请引用民法典依据，并给出建议修改后的条款文字。
+      en: |-
+        Write a rebuttal message I can send directly to the landlord/agent about this contract clause:
+
+        Clause text: {{paste the clause}}
+
+        Cite the Civil Code basis and propose revised clause wording.
