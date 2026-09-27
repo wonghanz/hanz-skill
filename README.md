@@ -1,6 +1,6 @@
 ﻿# Hanz Skill Vault 🚀
 
-> A curated collection of 34 enterprise-grade agent skills, career optimization engines, security sentinels, and creative multi-modal pipelines designed for **Google Antigravity**, **Claude Code**, **Codex**, and modern AI coding assistants.
+> A curated collection of 35 enterprise-grade agent skills, career optimization engines, security sentinels, and creative multi-modal pipelines designed for **Google Antigravity**, **Claude Code**, **Codex**, and modern AI coding assistants.
 
 ---
 
@@ -8,7 +8,7 @@
 
 - [Overview](#overview)
 - [Skills Catalog](#skills-catalog)
-  - [🛡️ Security & Cyber-Defense Suite (3)](#-security--cyber-defense-suite)
+  - [🛡️ Security & Cyber-Defense Suite (4)](#-security--cyber-defense-suite)
   - [💼 Career, Resume & Job Search Suite (27)](#-career-resume--job-search-suite)
   - [🎨 Design, Video & Multi-Modal Suite (4)](#-design-video--multi-modal-suite)
 - [Installation & Quick Start](#installation--quick-start)
@@ -37,6 +37,7 @@ Each skill in this repository is packaged according to the modern Agent Skill sp
 | Skill | Description | Key Capabilities |
 | :--- | :--- | :--- |
 | [`aegis-guard`](skills/aegis-guard/) | Enterprise-grade AI Cybersecurity Sentinel | Anti-Fable 5 adversarial injection defense, Zero-Leak DLP policy, blast-radius verification. |
+| [`open-source-security-contribution`](skills/open-source-security-contribution/) | Open-source security fix contribution pipeline | Issue discovery and ranking by learning value, isolated local reproduction, failing regression test, minimal fix, three human approval gates before commit/push/PR. |
 | [`nodiguard`](skills/nodiguard/) | Zero-trust local AI security proxy & system optimizer | Hardcoded secret neutralization, tokenized prompt isolation, memory safety enforcement. |
 | [`security-audit`](skills/security-audit/) | Rigorous multi-phase codebase security audit | 13 attack classes, machine-readable finding ledgers, Cloudflare edge rule validation, automated reporting. |
 
