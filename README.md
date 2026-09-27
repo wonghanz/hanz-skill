@@ -1,6 +1,8 @@
-﻿# Hanz Skill Vault 🚀
+# Hanz Skill Vault 🚀
 
-> A curated collection of 35 enterprise-grade agent skills, career optimization engines, security sentinels, and creative multi-modal pipelines designed for **Google Antigravity**, **Claude Code**, **Codex**, and modern AI coding assistants.
+> A curated collection of 45 agent skills — 35 original (career optimization engines, security sentinels, creative multi-modal pipelines) plus 10 vendored third-party skills — designed for **Google Antigravity**, **Claude Code**, **Codex**, and modern AI coding assistants.
+>
+> Vendored skills carry their upstream `LICENSE` and are itemised in [VENDORED.md](VENDORED.md).
 
 ---
 
@@ -11,6 +13,7 @@
   - [🛡️ Security & Cyber-Defense Suite (4)](#-security--cyber-defense-suite)
   - [💼 Career, Resume & Job Search Suite (27)](#-career-resume--job-search-suite)
   - [🎨 Design, Video & Multi-Modal Suite (4)](#-design-video--multi-modal-suite)
+  - [⚙️ Engineering Practice & Diagramming Suite (10 · vendored)](#-engineering-practice--diagramming-suite-vendored)
 - [Installation & Quick Start](#installation--quick-start)
   - [Google Antigravity](#google-antigravity)
   - [Claude Code / OpenCode / Codex](#claude-code--opencode--codex)
@@ -88,6 +91,32 @@ Each skill in this repository is packaged according to the modern Agent Skill sp
 
 ---
 
+### ⚙️ Engineering Practice & Diagramming Suite (vendored)
+
+Not original work — 10 skills copied from upstream MIT projects, each keeping
+its own `LICENSE`. See [VENDORED.md](VENDORED.md) for exact commits and for the
+repos that were evaluated and deliberately rejected.
+
+| Skill | Upstream | Purpose |
+| :--- | :--- | :--- |
+| [`security-and-hardening`](skills/security-and-hardening/) | [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) | Hardens code against OWASP-class vulnerabilities; input handling, auth, storage. |
+| [`code-review-and-quality`](skills/code-review-and-quality/) | addyosmani/agent-skills | Multi-axis review before a change reaches main. |
+| [`debugging-and-error-recovery`](skills/debugging-and-error-recovery/) | addyosmani/agent-skills | Root-cause discipline for unexpected failures. |
+| [`test-driven-development`](skills/test-driven-development/) | addyosmani/agent-skills | Red-green-refactor loop for logic and behaviour changes. |
+| [`api-and-interface-design`](skills/api-and-interface-design/) | addyosmani/agent-skills | Stable contracts across modules and services. |
+| [`performance-optimization`](skills/performance-optimization/) | addyosmani/agent-skills | Regressions, Core Web Vitals, N+1 patterns, profiling. |
+| [`observability-and-instrumentation`](skills/observability-and-instrumentation/) | addyosmani/agent-skills | Logging, metrics, tracing, alerting for production paths. |
+| [`git-workflow-and-versioning`](skills/git-workflow-and-versioning/) | addyosmani/agent-skills | Atomic commits, branching, conflict resolution, PR hygiene. |
+| [`design-taste-frontend`](skills/design-taste-frontend/) | [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) | Audit-first, non-templated frontend work; installed under its frontmatter name. |
+| [`archify`](skills/archify/) | [tt-a1i/archify](https://github.com/tt-a1i/archify) | Architecture, sequence, data-flow and lifecycle diagrams as standalone HTML. Node-based; see upstream attribution to Cocoon-AI. |
+
+`archify` is trimmed for this vault: its `test/` suite and rendered HTML demos
+are dropped, keeping only the 14 JSON schema examples that `SKILL.md` reads at
+runtime (8.6 MB → 2.6 MB). It has no runtime npm dependencies and requires
+Node >= 18.
+
+---
+
 ## 🛠️ Installation & Quick Start
 
 ### Google Antigravity
@@ -126,23 +155,33 @@ cp -r hanz-skill/skills/security-audit my-project/.gemini/skills/
 hanz-skill/
 ├── .gitignore
 ├── README.md
+├── VENDORED.md
 └── skills/
     ├── academic-cv-builder/
     ├── aegis-guard/
+    ├── api-and-interface-design/
     ├── apple-design/
     ├── application-form-filler/
+    ├── archify/
     ├── career-changer-translator/
+    ├── code-review-and-quality/
     ├── cold-email-writer/
     ├── cover-letter-generator/
     ├── creative-portfolio-resume/
+    ├── debugging-and-error-recovery/
+    ├── design-taste-frontend/
     ├── executive-resume-writer/
     ├── furniture-cad-render/
+    ├── git-workflow-and-versioning/
     ├── interview-coach/
     ├── interview-prep-generator/
     ├── job-description-analyzer/
     ├── linkedin-profile-optimizer/
     ├── nodiguard/
+    ├── observability-and-instrumentation/
     ├── offer-comparison-analyzer/
+    ├── open-source-security-contribution/
+    ├── performance-optimization/
     ├── portfolio-case-study-writer/
     ├── reference-list-builder/
     ├── remotion-best-practices/
@@ -158,9 +197,11 @@ hanz-skill/
     ├── resume-version-manager/
     ├── resumecraftr/
     ├── salary-negotiation-prep/
+    ├── security-and-hardening/
     ├── security-audit/
     ├── tech-resume-optimizer/
-    └── technical-job-search/
+    ├── technical-job-search/
+    └── test-driven-development/
 ```
 
 ---
@@ -171,9 +212,17 @@ This repository strictly adheres to **NodiGuard Zero-Leak Data Loss Prevention (
 - **No hardcoded secrets**: All API keys, passwords, bearer tokens, and private credentials are excluded.
 - **Environment decoupled**: Any scripts require environment variables (`os.environ.get(...)`) supplied at runtime.
 - **Strict `.gitignore`**: Local `.env`, credentials files, logs, and development artifacts are automatically filtered.
+- **Vendored code is scanned too**: the 10 third-party skills were regex-scanned for AWS/GitHub/Anthropic/OpenAI/Slack/Google key formats and PEM private keys before inclusion; all returned zero matches.
 
 ---
 
 ## 📄 License
 
-Private repository curated for personal and team agent orchestration.
+The 35 original skills in `skills/` are private work curated for personal and
+team agent orchestration.
+
+10 skills are **not** original: they are vendored from upstream MIT projects and
+remain under those terms. Each vendored directory keeps its upstream `LICENSE`,
+`archify` additionally keeps `THIRD_PARTY_NOTICES.md` and the OFL text for its
+bundled JetBrains Mono font. Sources, commits and rejected candidates are
+recorded in [VENDORED.md](VENDORED.md).

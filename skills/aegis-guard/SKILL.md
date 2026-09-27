@@ -1,4 +1,4 @@
-﻿---
+---
 name: aegis-guard
 description: >-
   Enterprise-grade AI Cybersecurity Sentinel for Antigravity. Enforces Anti-Fable 5 adversarial prompt injection defense,
