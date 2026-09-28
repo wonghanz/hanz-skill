@@ -20,6 +20,15 @@ Never skip directly from "issue found" to "code modified".
 
 When starting fresh: search GitHub, collect 5-10 candidates, explain each, let the user pick one, then walk the stages above. Full stage detail is in `references/workflow.md`.
 
+## Kill list: run before Gate #1
+
+Most candidates die here. Both of these are cheap and answerable from raw file fetches and repo metadata — do them *before* asking the user to approve a clone, not after ten stages of careful work.
+
+1. **Is the claim still true at HEAD?** Quote the exact code the issue describes and confirm the defect is present in the current file, not already fixed. Then check the date the behavior changed against the latest release tag and the issue's creation date. A security issue filed days or weeks after a fix landed is a duplicate of closed work, and a PR against it will be rejected. If the code already contradicts the issue, STOP — report that it does not reproduce and never build the fix anyway.
+2. **Do the maintainers want it?** Read `SECURITY.md` (email-only disclosure means no public PR is wanted), any threat model or accepted-risk table (behavior documented as "accepted risk" is not a gap awaiting a fix), and the repo's own permissions — if you cannot open a PR, the analysis is private-only regardless of how good it is.
+
+See the pre-flight checklist in `references/workflow.md`.
+
 ## Three approval gates
 
 Stop and ask before crossing each. The user is the final authority on anything that leaves the local machine.

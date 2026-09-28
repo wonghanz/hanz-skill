@@ -36,6 +36,19 @@ Prefer issues where you can safely demonstrate: root cause + reproduction + regr
 
 **→ Approval Gate #1** (see SKILL.md) before cloning or modifying.
 
+## Stage 3.5 — Pre-flight kill list (run before Gate #1)
+
+Ten stages of correct work on a dead candidate teaches nothing and wastes the user's approval. Answer these from raw fetches and repo metadata, without cloning:
+
+- [ ] **The quoted code still matches the claim at HEAD.** Fetch the file the issue names and read the specific lines. If the guard, check, or validation the issue says is missing is present, the issue is stale — STOP, do not proceed to Gate #1.
+- [ ] **The fix has not already shipped.** Compare the commit that introduced the current behavior (`git log -S '<guard call>'` once cloned, or the file's blame in the GitHub UI) with the newest release tag and the issue's creation date. A guard that shipped before the issue was filed means the reporter tested an older build.
+- [ ] **Nobody has claimed it.** Linked PR, `assignee`, or an open PR touching the same file.
+- [ ] **The maintainers accept a public PR.** `SECURITY.md` that says "email the maintainer" is a request for private disclosure, not a PR. A threat model or accepted-risk table that names this behavior as accepted means there is nothing to contribute.
+- [ ] **You actually have permission to open a PR.** Check `viewerPermission` / role and whether interactions are restricted to prior contributors.
+- [ ] **A failing reproduction is plausible in the time available.** Native builds, missing Python for node-gyp, or an app that cannot boot without a paid API key is worth knowing before Gate #1, not at Stage 7.
+
+Anything that fails here is reported to the user as the reason the candidate is dead — the negative result is itself the deliverable.
+
 ## Stage 4 — Clone and isolate
 
 ```bash
