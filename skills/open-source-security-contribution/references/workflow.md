@@ -38,16 +38,20 @@ Prefer issues where you can safely demonstrate: root cause + reproduction + regr
 
 ## Stage 3.5 — Pre-flight kill list (run before Gate #1)
 
-Ten stages of correct work on a dead candidate teaches nothing and wastes the user's approval. Answer these from raw fetches and repo metadata, without cloning:
+Ten stages of correct work on a dead candidate teaches nothing and wastes the user's approval. Answer these from raw fetches and repo metadata, without cloning. **Check governance before code**: a repo policy that forbids the contribution voids every line of code analysis spent on it, and the read costs three files instead of an afternoon.
 
+- [ ] **Does this project have a contribution path you qualify for?** Read `AGENTS.md`, `.github/copilot-instructions.md`, `SECURITY.md` and `CONTRIBUTING.md` before any code. Repos increasingly gate agent-assisted work: some require a maintainer-approved Proposal *and* Design issue before implementation — under higress's policy, confirming a defect and choosing a verification approach already counts as "material participation", so the gate binds before a line is written; some run an issue-*claim* protocol where another agent may already hold it; some bar public issues and PRs for vulnerabilities outright. Confirm `gh api repos/<r> --jq .permissions` too — if their exception demands `maintain`/`admin` and you have `pull:true, push:false`, there is no path and the bug is somebody else's to fix.
+- [ ] **Match policy wording by intent, not literal phrase.** A filter hunting `do not create a public` returned `public-ok` for a repo whose SECURITY.md says "Please do NOT report security vulnerabilities through public GitHub issues, discussions, or pull requests". Read the file yourself for whatever candidate reaches the shortlist; never trust the automation's verdict on the disclosure channel.
 - [ ] **The quoted code still matches the claim at HEAD.** Fetch the file the issue names and read the specific lines. If the guard, check, or validation the issue says is missing is present, the issue is stale — STOP, do not proceed to Gate #1.
-- [ ] **The fix has not already shipped.** Compare the commit that introduced the current behavior (`git log -S '<guard call>'` once cloned, or the file's blame in the GitHub UI) with the newest release tag and the issue's creation date. A guard that shipped before the issue was filed means the reporter tested an older build.
+- [ ] **The fix has not already shipped.** Compare the commit that introduced the current behavior (`git log -S '<guard call>'` once cloned, or the file's blame in the GitHub UI) with the newest release tag and the issue's creation date. A guard that shipped before the issue was filed means the reporter tested an older build. Re-fetch the issue's own `state` immediately before Gate #1 — search indexes lag, and smithers#2936 was claimed, fixed and closed between my scan and my reading of it.
 - [ ] **Nobody has claimed it.** Linked PR, `assignee`, or an open PR touching the same file.
-- [ ] **The maintainers accept a public PR.** `SECURITY.md` that says "email the maintainer" is a request for private disclosure, not a PR. A threat model or accepted-risk table that names this behavior as accepted means there is nothing to contribute.
+- [ ] **Do the maintainers treat this as a bug at all?** A `SECURITY.md` that says "email the maintainer" is a request for private disclosure, not a PR — Questarr's #1081 had a tested fix sitting on a fork by the time that line was read. An accepted-risk table or threat model that names this behavior accepted means there is nothing to contribute. The positive signal is equally worth looking for: sibling issues carrying a `security` label show the project does not consider the behavior by-design.
 - [ ] **You actually have permission to open a PR.** Check `viewerPermission` / role and whether interactions are restricted to prior contributors.
-- [ ] **A failing reproduction is plausible in the time available.** Native builds, missing Python for node-gyp, or an app that cannot boot without a paid API key is worth knowing before Gate #1, not at Stage 7.
+- [ ] **Who filed the issue?** An issue self-filed by an active maintainer is usually their own todo list, not an open invitation — compare the author against the recent commit list and their activity that day. Not a kill on its own, but a Gate #1 caveat: the acceptance window can close in hours while you are still writing tests.
+- [ ] **Is the fix the issue proposes even expressible here?** Read the actual interface you are told to use (the vendored `.d.ts`, the type stubs, the SDK docs) and list its members. If the API has no way to distinguish what the issue wants distinguished, that half is unimplementable — plan to ship the verified part and name the rest as open rather than inventing a mechanism.
+- [ ] **A failing reproduction is plausible in the time available.** Native builds, missing Python for node-gyp, an app that cannot boot without a paid API key, or a fix that lives in a submodule of a different repository are all worth knowing before Gate #1, not at Stage 7.
 
-Anything that fails here is reported to the user as the reason the candidate is dead — the negative result is itself the deliverable.
+Anything that fails here is reported to the user as the reason the candidate is dead — the negative result is itself the deliverable. A confirmed, well-described, genuinely exploitable bug with no contribution path you qualify for is still a dead candidate: do not let the quality of the analysis talk you into proposing the PR anyway, and do not let a user's "make sure you actually fix a bug" pressure turn a blocked path into an end-run around a project's stated policy.
 
 ## Stage 4 — Clone and isolate
 
@@ -157,5 +161,9 @@ Show the user: changed files, diff summary, tests passed, security impact, poten
 **→ Approval Gate #3** before `git commit`, `git push`, or creating a PR.
 
 ## Stage 14 — Pull request
+
+Read the project's contribution policy **as written** before the first push: does it require `git commit -s` / a `Signed-off-by` trailer (DCO), a GPG signature, an issue link in the body, a PR template, or a label? A missing trailer fails the DCO check and forces an amend plus a force-push to your own PR branch.
+
+Do not infer the requirement from recent commit history — squash-merging and bot commits hide trailers that human contributors are still required to write. Read `CONTRIBUTING.md`.
 
 Draft the PR body from `templates.md`. Do not exaggerate severity; do not claim CVE-level impact unless supported by evidence.
